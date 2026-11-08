@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShiftSurface" format=3]
+
+[ext_resource type="Script" path="res://addons/shift_vehicle/resources/surface.gd" id="1_t4bl2"]
+
+[resource]
+script = ExtResource("1_t4bl2")
+surface_name = "Gravel"
+grip = 0.7
+rolling_resistance = 3.0
+mark_color = Color(0.3, 0.27, 0.23, 0.6)
+smoke_color = Color(0.62, 0.55, 0.43, 0.35)

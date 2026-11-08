@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShiftSurface" format=3]
+
+[ext_resource type="Script" path="res://addons/shift_vehicle/resources/surface.gd" id="1_ckaee"]
+
+[resource]
+script = ExtResource("1_ckaee")
+surface_name = "Grass"
+grip = 0.55
+rolling_resistance = 5.0
+mark_color = Color(0.16, 0.2, 0.07, 0.8)
+smoke_color = Color(0.42, 0.36, 0.24, 0.15)

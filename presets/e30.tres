@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="CarValues" format=3 uid="uid://sr43cpxi14ff"]
+
+[ext_resource type="Script" uid="uid://rj0v3jri7dxo" path="res://addons/shift_vehicle/resources/values.gd" id="1_jcxrb"]
+
+[sub_resource type="Curve" id="Curve_bx5ju"]
+_data = [Vector2(0.020089287, 0.489011), 0.0, 0.0, 0, 0, Vector2(0.39955357, 0.93406594), 0.0, 0.0, 0, 0, Vector2(0.62500006, 0.9945055), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[resource]
+script = ExtResource("1_jcxrb")
+wheel_base = 2.57
+track = 1.4
+ride_frequency = [1.5, 1.5, 1.5, 1.5]
+max_compression = [0.3, 0.3, 0.3, 0.3]
+weight_distribution = [0.265, 0.265, 0.245, 0.245]
+damper_ratio = [0.4, 0.4, 0.4, 0.4]
+rear_antiroll_bar = false
+front_antiroll_bar = false
+front_antiroll_bar_stiffness = 35000.0
+rear_antiroll_bar_stiffness = 11000.0
+max_tire_turn_angle = 37.5
+steering_wheel_travel = 720.0
+steering_ratio = 20.5
+max_brake_torque = 9999999.0
+ABS = true
+abs_rate_apply = 0.1
+abs_rate_release = 0.05
+max_torque = 160.0
+max_rpm = 6000.0
+idle_rpm = 1000.0
+stall_rpm = 500.0
+starter_rpm = 1200.0
+engine_inertia = 0.239
+FR_torque_brake = true
+FL_torque_brake = true
+torque_curve = SubResource("Curve_bx5ju")
+center_diff_split = 0.0
+TBR = 0.0
+gear_ratio = [-3.46, 0.0, 3.71, 2.403, 1.681, 1.26, 1.0]
+final_drive = 3.25
+max_clutch_torque = 300.0
+transmission_mode = 1
+wheel_radius = 0.303
+wheel_mass = 7.25
+wheel_inertia = 0.486
+metadata/_custom_type_script = "uid://rj0v3jri7dxo"

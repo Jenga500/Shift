@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShiftSurface" format=3]
+
+[ext_resource type="Script" path="res://addons/shift_vehicle/resources/surface.gd" id="1_q3i8t"]
+
+[resource]
+script = ExtResource("1_q3i8t")
+surface_name = "Sand"
+grip = 0.5
+rolling_resistance = 10.0
+mark_color = Color(0.5, 0.41, 0.28, 0.7)
+smoke_color = Color(0.82, 0.72, 0.52, 0.35)
