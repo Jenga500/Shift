@@ -233,6 +233,15 @@ var SurfaceLookup = SurfaceLookupScript.new()
 ## Rear left wheel mesh, the first child of its ray.
 @onready var rl_wheel_mesh = rl_wheel.get_child(0)
 
+## Wheel meshes in wheel index order (front left, front right, rear left, rear
+## right), used to spin them in [method wheel_spin_process].
+@onready var wheel_meshes_by_index = [fl_wheel_mesh, fr_wheel_mesh, rl_wheel_mesh, rr_wheel_mesh]
+## Orientation of each wheel mesh as set up in the editor. The spin is applied
+## on top of it, so the mesh's own rotation and scale are kept.
+@onready var wheel_mesh_rest_basis = wheel_meshes_by_index.map(func(m): return m.basis)
+## Current roll angle of each wheel mesh in radians, in wheel index order.
+var wheel_spin_angle = [0.0, 0.0, 0.0, 0.0]
+
 	#########
 	# DEBUG #
 	#########
@@ -512,3 +521,17 @@ func limit_tire_force(force: Vector3, wheel: RayCast3D, contact: Vector3, delta:
 ## frame.
 func _process(delta: float) -> void:
 	EngineSound.sound_process(delta, self, engine, transmission)
+	wheel_spin_process(delta)
+
+
+## Rolls the wheel meshes with their simulated spin speed
+## ([code]wheeldata.wheel_angular_velocity[/code]).
+##
+## The roll turns around the wheel ray's X axis (the axle; the ray's forward is
+## -Z), so positive angular velocity rolls the wheel forward. The rotation is
+## applied in the ray's space on top of the mesh's rest orientation, so meshes
+## that are rotated or mirrored in the editor still spin around the axle.
+func wheel_spin_process(delta: float) -> void:
+	for i in range(4):
+		wheel_spin_angle[i] = fposmod(wheel_spin_angle[i] - wheeldata.wheel_angular_velocity[i] * delta, TAU)
+		wheel_meshes_by_index[i].basis = Basis(Vector3.RIGHT, wheel_spin_angle[i]) * wheel_mesh_rest_basis[i]

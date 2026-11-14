@@ -97,7 +97,7 @@ MeinAuto (ShiftCar)                 ← das Auto selbst (ein RigidBody3D)
 ├── HintenRechts (RayCast3D)        ← Rad 3
 │   └── Rad (Node3D)
 └── HintenLinks (RayCast3D)         ← Rad 4
-    └── Rad (Node3D)
+	└── Rad (Node3D)
 ```
 
 Die Namen sind egal. Wichtig sind nur die **Typen** und die **Reihenfolge** im
@@ -124,10 +124,10 @@ nächsten Schritt.
 4. **Vier Räder:** Füge vier `RayCast3D` als Kinder hinzu und setze sie an die
    vier Radpositionen.
    - **Target Position** auf `(0, -0.5, 0)` stellen. Der Strahl zeigt damit nach
-     unten. Seine Länge (hier 0,5 m) ist die Länge der voll ausgefederten
-     Federung.
+	 unten. Seine Länge (hier 0,5 m) ist die Länge der voll ausgefederten
+	 Federung.
    - Die Strahlen müssen **nach vorne in −Z** zeigen: Die Vorderseite des Autos
-     ist die lokale −Z-Richtung (in Godot üblich).
+	 ist die lokale −Z-Richtung (in Godot üblich).
 5. **Radhalter:** Gib jedem `RayCast3D` einen `Node3D` als **erstes Kind**. Diesen
    Node verschiebt das Addon an den Bodenkontaktpunkt. Hänge dein Rad-Mesh
    darunter, wenn du sichtbare Räder willst.
@@ -154,7 +154,7 @@ nächsten Schritt.
    `StaticBody3D` mit einer großen `BoxShape3D`.
 9. **Kamera:** Füge irgendwo eine `Camera3D` hinzu, die das Auto sieht.
 10. **Starten:** Starte die Szene, drücke **G** (Motor an), dann **E** (erster
-    Gang; im manuellen Modus dabei **Shift** gedrückt halten) und **W** (Gas).
+	Gang; im manuellen Modus dabei **Shift** gedrückt halten) und **W** (Gas).
 
 ### 3.3 Optional: Anzeige und Debug-Pfeile
 

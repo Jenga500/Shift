@@ -16,4 +16,5 @@ FR_torque_brake = true
 FL_torque_brake = true
 torque_curve = ExtResource("2_tsmdu")
 TBR = 2.5
+transmission_mode = 2
 metadata/_custom_type_script = "uid://rj0v3jri7dxo"

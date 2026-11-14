@@ -44,7 +44,7 @@ extends Node
 ##
 ## If the ray is not colliding (the wheel is in the air), the compression is
 ## reset to 0.0 and the wheel meshes are placed at the fully extended position
-## (local [code]y = -rest_length[/code]). No force is applied.
+## (local [code]y = -rest_length + wheel_radius[/code]). No force is applied.
 ##
 ## [param ray] is the wheel's raycast.[br]
 ## [param Data] is the runtime suspension state (read and written).[br]
@@ -59,12 +59,12 @@ func suspension_proccess(ray: RayCast3D, Data: RuntimeData.suspension, car: Rigi
 		var arb_force = anti_roll_bar_calc(Data, Values)
 		compression_calc(ray, Data, Values, wheel_index)
 		
-		spring_force_calc(ray, Data, car, k, spring_dampning, arb_force, wheel_index)
+		spring_force_calc(ray, Data, car, k, spring_dampning, arb_force, wheel_index, Values)
 	else:
 		var wheels = [car.fl_wheel_mesh, car.fr_wheel_mesh, car.rl_wheel_mesh, car.rr_wheel_mesh]
 		Data.compression[wheel_index] = 0.0
 		var rest_length = ray.target_position.length()
-		wheels[wheel_index].position.y = -rest_length
+		wheels[wheel_index].position.y = -rest_length + Values.wheel_radius
 
 
 ## Calculates the anti-roll bar force for each wheel.
@@ -185,15 +185,17 @@ func spring_dampning_calc(ray: RayCast3D,car: RigidBody3D, Values: Resource, k: 
 ## [method RigidBody3D.apply_force], at the offset from the car's origin to the
 ## ray's origin (the suspension mounting point).
 ##
-## The wheel mesh is placed at the ground contact point, along the spring
-## direction from the ray's origin.
+## The wheel mesh is placed one [code]wheel_radius[/code] above the ground
+## contact point, along the spring direction from the ray's origin, so a mesh
+## with its origin at the wheel's center sits on the ground.
 ##
 ## [param k] is the spring rate from [method spring_rate_calc].[br]
 ## [param spring_dampning] is the damper force from
 ## [method spring_dampning_calc].[br]
 ## [param arb_force] is the array from [method anti_roll_bar_calc].[br]
-## [param i] is the wheel index.
-func spring_force_calc(ray: RayCast3D, Data: RuntimeData.suspension, car: RigidBody3D, k: float, spring_dampning: float, arb_force: Array[float], i: int):
+## [param i] is the wheel index.[br]
+## [param Values] is the car tuning resource.
+func spring_force_calc(ray: RayCast3D, Data: RuntimeData.suspension, car: RigidBody3D, k: float, spring_dampning: float, arb_force: Array[float], i: int, Values: Resource):
 		
 		var wheels = [car.fl_wheel_mesh, car.fr_wheel_mesh, car.rl_wheel_mesh, car.rr_wheel_mesh]
 		var hit = ray.get_collision_point()
@@ -203,7 +205,7 @@ func spring_force_calc(ray: RayCast3D, Data: RuntimeData.suspension, car: RigidB
 		var spring_force = k * Data.compression[i]
 		Data.wheel_spring_force[i] = (spring_force - spring_dampning + arb_force[i]) * up_dir_spring
 		
-		wheels[i].global_position = ray.global_position - up_dir_spring * hit_distance
+		wheels[i].global_position = ray.global_position - up_dir_spring * (hit_distance - Values.wheel_radius)
 		var wheel_force_area = ray.global_position - car.global_position
 		car.apply_force(Data.wheel_spring_force[i], wheel_force_area)
 

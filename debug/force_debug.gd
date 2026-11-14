@@ -47,8 +47,13 @@ func update_force_arrow():
 
 	cyl_mesh.height = length
 
-	$Center/Arrow.basis = Basis(Quaternion(Vector3.UP, direction))
-	$Center/Arrow.position = direction * (length / 2.0) + Position_Offset
+	# the force is in world space and the wheel mesh this hangs on spins, so the
+	# arrow is placed in world space, with the side offset taken from the wheel
+	# ray (the mesh's parent), which does not roll
+	var ray: Node3D = get_parent_node_3d().get_parent_node_3d()
+	var offset: Vector3 = ray.global_basis.orthonormalized() * Position_Offset if ray else Position_Offset
+	$Center/Arrow.global_basis = Basis(Quaternion(Vector3.UP, direction))
+	$Center/Arrow.global_position = $Center.global_position + direction * (length / 2.0) + offset
 	
 func update_force_label():
 	if Display_Force_Magntiude == true:

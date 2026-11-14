@@ -43,4 +43,5 @@ transmission_mode = 1
 wheel_radius = 0.303
 wheel_mass = 7.25
 wheel_inertia = 0.486
+DEBUG = false
 metadata/_custom_type_script = "uid://rj0v3jri7dxo"
